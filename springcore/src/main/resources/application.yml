@@ -1,0 +1,27 @@
+spring:
+  # H2 DB 접속 설정
+  # jdbc:h2:~/springcoredb
+  datasource:
+    url: jdbc:h2:mem:springcoredb
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  # JPA 설정
+  jpa:
+    hibernate:
+      # app 실행시점에 테이블 모두 지우고 다시 생성
+      ddl-auto: create
+    properties:
+      hibernate:
+        #show_sql : true
+        format_sql: true
+
+#포트번호
+server:
+    port: 8091
+
+#로그
+logging:
+  level:
+    org.hibernate.SQL : debug
+    #org.hibernate.type : trace
