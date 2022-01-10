@@ -1,7 +1,7 @@
 package com.sparta.springcore.service;
 import com.sparta.springcore.model.Product;
-import com.sparta.springcore.dto.ProductMypriceRequestDto;
-import com.sparta.springcore.dto.ProductRequestDto;
+import com.sparta.springcore.dto.request.ProductMypriceRequestDto;
+import com.sparta.springcore.dto.request.ProductRequestDto;
 import com.sparta.springcore.repository.ProductRepository;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;

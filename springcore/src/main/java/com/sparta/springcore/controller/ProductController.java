@@ -1,7 +1,7 @@
 package com.sparta.springcore.controller;
 import com.sparta.springcore.model.Product;
-import com.sparta.springcore.dto.ProductMypriceRequestDto;
-import com.sparta.springcore.dto.ProductRequestDto;
+import com.sparta.springcore.dto.request.ProductMypriceRequestDto;
+import com.sparta.springcore.dto.request.ProductRequestDto;
 import com.sparta.springcore.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
