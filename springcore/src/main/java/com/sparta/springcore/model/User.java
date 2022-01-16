@@ -22,6 +22,9 @@ public class User {
     private String username;
 
     @Column(nullable = false)
+    private String nickname;
+
+    @Column(nullable = false)
     private String password;
 
     @Column(nullable = false, unique = true)
@@ -31,10 +34,11 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
-    public User(String username, String password, String email, UserRoleEnum role) {
+    public User(String username, String password, String email, UserRoleEnum role, String nickname) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
+        this.nickname = nickname;
     }
 }

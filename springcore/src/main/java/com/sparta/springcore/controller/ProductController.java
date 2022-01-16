@@ -2,7 +2,11 @@ package com.sparta.springcore.controller;
 import com.sparta.springcore.model.Product;
 import com.sparta.springcore.dto.request.ProductMypriceRequestDto;
 import com.sparta.springcore.dto.request.ProductRequestDto;
+import com.sparta.springcore.model.UserRoleEnum;
+import com.sparta.springcore.security.UserDetailsImpl;
 import com.sparta.springcore.service.ProductService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -20,8 +24,13 @@ public class ProductController {
 
     // 신규 상품 등록
     @PostMapping("/api/products")
-    public Product createProduct(@RequestBody ProductRequestDto requestDto) throws SQLException {
-        Product product = productService.createProduct(requestDto);
+    public Product createProduct(@RequestBody ProductRequestDto requestDto,
+                                 @AuthenticationPrincipal UserDetailsImpl userDetails
+                                 ) throws SQLException {
+        // 로그인 되어 있는 회원 테이블의 ID
+        Long userId = userDetails.getUser().getId();
+
+        Product product = productService.createProduct(requestDto,userId);
 
         // 응답 보내기
         return product;
@@ -38,10 +47,25 @@ public class ProductController {
 
     // 등록된 전체 상품 목록 조회
     @GetMapping("/api/products")
-    public List<Product> getProducts() throws SQLException {
-        List<Product> products = productService.getProducts();
+    public List<Product> getProducts(@AuthenticationPrincipal UserDetailsImpl userDetails) throws SQLException {
+        // 로그인 되어 있는 회원 테이블의 ID
+        Long userId = userDetails.getUser().getId();
+        List<Product> products = productService.getProducts(userId);
 
         // 응답 보내기
         return products;
     }
+
+    // 관리자용 등록된 모든 상품 목록 조회
+    @Secured(value = UserRoleEnum.Authority.ADMIN)
+    @GetMapping("/api/admin/products")
+    public List<Product> getAllProducts() throws SQLException {
+        List<Product> products = productService.getAllProducts();
+
+        // 응답 보내기
+        return products;
+    }
+
+
+
 }

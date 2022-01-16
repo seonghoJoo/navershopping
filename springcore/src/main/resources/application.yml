@@ -1,8 +1,9 @@
 spring:
   # H2 DB 접속 설정
   # jdbc:h2:~/springcoredb
+  # jdbc:h2:mem:springcoredb
   datasource:
-    url: jdbc:h2:mem:springcoredb
+    url: jdbc:h2:tcp://localhost/~/hani
     username: sa
     password:
     driver-class-name: org.h2.Driver
@@ -10,7 +11,7 @@ spring:
   jpa:
     hibernate:
       # app 실행시점에 테이블 모두 지우고 다시 생성
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         #show_sql : true
