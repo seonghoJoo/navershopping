@@ -34,11 +34,27 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private UserRoleEnum role;
 
+    // 같은 kakaoId 사용자를 허용해 주지 않는다.
+    @Column(nullable = true, unique = true)
+    private Long kakaoId;
+
+    // 일반 Form 로그인 사용자
     public User(String username, String password, String email, UserRoleEnum role, String nickname) {
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
         this.nickname = nickname;
+        this.kakaoId = null;
+    }
+
+    // 카카오 로그인 사용자
+    public User(String nickname, String password, String email, UserRoleEnum role, Long kakaoId) {
+        this.username = nickname;
+        this.nickname = nickname;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.kakaoId = kakaoId;
     }
 }

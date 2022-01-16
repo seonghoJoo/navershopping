@@ -47,4 +47,9 @@ public class UserService {
         User user = new User(username, password, email, role, nickname);
         userRepository.save(user);
     }
+
 }
+
+
+
+

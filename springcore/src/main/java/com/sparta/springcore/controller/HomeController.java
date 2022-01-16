@@ -11,6 +11,7 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         model.addAttribute("username", userDetails.getUsername());
+        model.addAttribute("nickname", userDetails.getUser().getNickname());
         if (userDetails.getUser().getRole() == UserRoleEnum.ADMIN) {
             model.addAttribute("admin_role", true);
         }
