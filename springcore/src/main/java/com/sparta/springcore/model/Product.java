@@ -42,6 +42,18 @@ public class Product {
     // 관심 상품 생성 시 이용합니다.
     public Product(ProductRequestDto requestDto, Long userId) {
         // 입력값 Validation
+        validateProductInput(requestDto, userId);
+
+        // 관심상품을 등록한 회원 Id 저장
+        this.userId = userId;
+        this.title = requestDto.getTitle();
+        this.image = requestDto.getImage();
+        this.link = requestDto.getLink();
+        this.lprice = requestDto.getLprice();
+        this.myprice = 0;
+    }
+
+    private void validateProductInput(ProductRequestDto requestDto, Long userId) {
         if (userId == null || userId <= 0) {
             throw new IllegalArgumentException("회원 Id 가 유효하지 않습니다.");
         }
@@ -61,14 +73,6 @@ public class Product {
         if (requestDto.getLprice() <= 0) {
             throw new IllegalArgumentException("상품 최저가가 0 이하입니다.");
         }
-
-        // 관심상품을 등록한 회원 Id 저장
-        this.userId = userId;
-        this.title = requestDto.getTitle();
-        this.image = requestDto.getImage();
-        this.link = requestDto.getLink();
-        this.lprice = requestDto.getLprice();
-        this.myprice = 0;
     }
 
     boolean isValidUrl(String url)
