@@ -1,11 +1,18 @@
 package com.sparta.springcore.model;
 
 import com.sparta.springcore.dto.request.ProductRequestDto;
+import com.sparta.springcore.service.ProductService;
 import org.junit.jupiter.api.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class ProductTest {
+
+    @Autowired
+    ProductService productService;
 
     @Nested
     @DisplayName("회원이 요청한 관심상품 객체 생성")

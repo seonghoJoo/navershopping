@@ -3,6 +3,8 @@ package com.sparta.springcore.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.sparta.springcore.dto.request.ProductMypriceRequestDto;
+import com.sparta.springcore.dto.request.ProductRequestDto;
+import com.sparta.springcore.model.Product;
 import com.sparta.springcore.model.Product;
 import com.sparta.springcore.repository.ProductRepository;
 import org.junit.jupiter.api.DisplayName;
@@ -11,13 +13,15 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Optional;
+
 import static com.sparta.springcore.service.ProductService.MIN_MY_PRICE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class ProductServiceTest {
-
     @Mock
     ProductRepository productRepository;
 
@@ -32,7 +36,21 @@ class ProductServiceTest {
                 myprice
         );
 
+        Long userId = 777L;
+        ProductRequestDto requestProductDto = new ProductRequestDto(
+                "오리온 꼬북칩 초코츄러스맛 160g",
+                "https://shopping-phinf.pstatic.net/main_2416122/24161228524.20200915151118.jpg",
+                "https://search.shopping.naver.com/gate.nhn?id=24161228524",
+                2350
+        );
+
+        Product product = new Product(requestProductDto, userId);
+
         ProductService productService = new ProductService(productRepository);
+        
+        // Mockito 영역
+        when(productRepository.findById(productId))
+                .thenReturn(Optional.of(product));
 
         // when
         Product result = productService.updateProduct(productId, requestMyPriceDto);
