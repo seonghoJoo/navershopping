@@ -71,6 +71,12 @@ public class ProductService {
         List<Product> products = productRepository.findAll();
         return products;
     }
+
+    public List<Product> getProducts(Long userId, int page, int size, String sortBy, boolean isAsc) {
+
+        List<Product> products = productRepository.findAllByUserId(userId);
+        return products;
+    }
 }
 
 

@@ -47,10 +47,15 @@ public class ProductController {
 
     // 등록된 전체 상품 목록 조회
     @GetMapping("/api/products")
-    public List<Product> getProducts(@AuthenticationPrincipal UserDetailsImpl userDetails) throws SQLException {
+    public List<Product> getProducts(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") boolean isAsc,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) throws SQLException {
         // 로그인 되어 있는 회원 테이블의 ID
         Long userId = userDetails.getUser().getId();
-        List<Product> products = productService.getProducts(userId);
+        List<Product> products = productService.getProducts(userId, page, size, sortBy, isAsc);
 
         // 응답 보내기
         return products;
