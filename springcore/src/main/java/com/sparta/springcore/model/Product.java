@@ -17,6 +17,7 @@ public class Product {
     // ID가 자동으로 생성 및 증가합니다.
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @Column(name="product_id")
     private Long id;
 
     // 반드시 값을 가지도록 합니다.
@@ -37,6 +38,10 @@ public class Product {
 
     @Column(nullable = false)
     private Long userId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="folder_id")
+    private Folder folder;
 
     // 관심 상품 생성 시 이용합니다.
     public Product(ProductRequestDto requestDto, Long userId) {

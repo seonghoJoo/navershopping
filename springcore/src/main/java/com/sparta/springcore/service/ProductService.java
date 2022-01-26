@@ -3,7 +3,12 @@ import com.sparta.springcore.model.Product;
 import com.sparta.springcore.dto.request.ProductMypriceRequestDto;
 import com.sparta.springcore.dto.request.ProductRequestDto;
 import com.sparta.springcore.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -72,10 +77,21 @@ public class ProductService {
         return products;
     }
 
-    public List<Product> getProducts(Long userId, int page, int size, String sortBy, boolean isAsc) {
+    public Page<Product> getProducts(Long userId, int page, int size, String sortBy, boolean isAsc) {
 
-        List<Product> products = productRepository.findAllByUserId(userId);
-        return products;
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+
+        Pageable pageable = PageRequest.of(page,size,sort);
+
+        return productRepository.findAllByUserId(userId, pageable);
+    }
+
+    public Page<Product> getAllProducts(int page, int size, String sortBy, boolean isAsc) {
+        Sort.Direction direction = isAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, sortBy);
+        Pageable pageable = PageRequest.of(page,size,sort);
+        return productRepository.findAll(pageable);
     }
 }
 

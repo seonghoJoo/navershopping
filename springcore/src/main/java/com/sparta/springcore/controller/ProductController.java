@@ -5,12 +5,13 @@ import com.sparta.springcore.dto.request.ProductRequestDto;
 import com.sparta.springcore.model.UserRoleEnum;
 import com.sparta.springcore.security.UserDetailsImpl;
 import com.sparta.springcore.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
-import java.util.List;
 
 @RestController //  JSON으로 데이터를 주고받음을 선언합니다.
 public class ProductController {
@@ -47,7 +48,7 @@ public class ProductController {
 
     // 등록된 전체 상품 목록 조회
     @GetMapping("/api/products")
-    public List<Product> getProducts(
+    public Page<Product> getProducts(
             @RequestParam("page") int page,
             @RequestParam("size") int size,
             @RequestParam("sortBy") String sortBy,
@@ -55,7 +56,8 @@ public class ProductController {
             @AuthenticationPrincipal UserDetailsImpl userDetails) throws SQLException {
         // 로그인 되어 있는 회원 테이블의 ID
         Long userId = userDetails.getUser().getId();
-        List<Product> products = productService.getProducts(userId, page, size, sortBy, isAsc);
+        page -= 1;
+        Page <Product> products = productService.getProducts(userId, page, size, sortBy, isAsc);
 
         // 응답 보내기
         return products;
@@ -64,9 +66,14 @@ public class ProductController {
     // 관리자용 등록된 모든 상품 목록 조회
     @Secured(value = UserRoleEnum.Authority.ADMIN)
     @GetMapping("/api/admin/products")
-    public List<Product> getAllProducts() throws SQLException {
-        List<Product> products = productService.getAllProducts();
-
+    public Page<Product> getAllProducts(
+            @RequestParam("page") int page,
+            @RequestParam("size") int size,
+            @RequestParam("sortBy") String sortBy,
+            @RequestParam("isAsc") boolean isAsc
+    ) throws SQLException {
+        page -=1;
+        Page<Product> products = productService.getAllProducts(page,size,sortBy,isAsc);
         // 응답 보내기
         return products;
     }

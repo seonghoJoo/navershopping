@@ -4,6 +4,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.*;
 
 @Setter
 @Getter // get 함수를 일괄적으로 만들어줍니다.
@@ -14,6 +15,7 @@ public class User {
     // ID가 자동으로 생성 및 증가합니다.
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
+    @Column(name = "user_id")
     private Long id;
 
     // nullable: null 허용 여부
@@ -37,6 +39,9 @@ public class User {
     // 같은 kakaoId 사용자를 허용해 주지 않는다.
     @Column(nullable = true, unique = true)
     private Long kakaoId;
+
+    @OneToMany(mappedBy = "user")
+    private List<Folder> folders = new ArrayList<>();
 
     // 일반 Form 로그인 사용자
     public User(String username, String password, String email, UserRoleEnum role, String nickname) {
