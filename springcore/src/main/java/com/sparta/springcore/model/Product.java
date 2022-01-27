@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 import javax.persistence.*;
+import java.util.*;
 
 @Entity // DB 테이블 역할을 합니다.
 @Setter
@@ -39,9 +41,8 @@ public class Product {
     @Column(nullable = false)
     private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="folder_id")
-    private Folder folder;
+    @ManyToMany
+    private List<Folder> folderList = new ArrayList<>();
 
     // 관심 상품 생성 시 이용합니다.
     public Product(ProductRequestDto requestDto, Long userId) {
@@ -58,4 +59,10 @@ public class Product {
         this.myprice = 0;
     }
 
+    public void addFolder(Folder folder){
+        this.folderList.add(folder);
+    }
+
 }
+
+

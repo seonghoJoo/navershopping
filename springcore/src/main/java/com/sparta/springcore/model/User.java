@@ -40,9 +40,6 @@ public class User {
     @Column(nullable = true, unique = true)
     private Long kakaoId;
 
-    @OneToMany(mappedBy = "user")
-    private List<Folder> folders = new ArrayList<>();
-
     // 일반 Form 로그인 사용자
     public User(String username, String password, String email, UserRoleEnum role, String nickname) {
         this.username = username;

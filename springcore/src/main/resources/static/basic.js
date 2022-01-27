@@ -181,36 +181,39 @@ ${folders}
 }
 
 function addInputForProductToFolder(productId, button) {
-$.ajax({
-type: 'GET',
-url: `/api/folders`,
-success: function (folders) {
-const options = folders.map(folder => `<option value="${folder.id}">${folder.name}</option>`)
-const form = `
-<span>
-<form id="folder-select" method="post" autocomplete="off" action="/api/products/${productId}/folder">
-<select name="folderId" form="folder-select">
-${options}
-</select>
-<input type="submit" value="추가" style="padding: 5px; font-size: 12px; margin-left: 5px;">
-</form>
-</span>
-`;
-$(form).insertBefore(button);
-$(button).remove();
-$("#folder-select").on('submit', function(e) {
-e.preventDefault();
-$.ajax({
-type: $(this).prop('method'),
-url : $(this).prop('action'),
-data: $(this).serialize()
-}).done(function() {
-alert('성공적으로 등록되었습니다.');
-window.location.reload();
-});
-});
-}
-});
+    $.ajax({
+        type: 'GET',
+        url: '/api/folders',
+        success: function (folders) {
+            const options = folders.map(folder => `<option value="${folder.id}">${folder.name}</option>`)
+            const form = `
+                <span>
+                    <form id="folder-select" method="post" autocomplete="off" action="/api/products/${productId}/folder">
+                        <select name="folderId" form="folder-select">
+                            ${options}
+                        </select>
+                        <input type="submit" value="추가" style="padding: 5px; font-size: 12px; margin-left: 5px;">
+                    </form>
+                </span>
+            `;
+            $(form).insertBefore(button);
+            $(button).remove();
+            $("#folder-select").on('submit', function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: $(this).prop('method'),
+                    url : $(this).prop('action'),
+                    data: $(this).serialize()
+                }).done(function() {
+                    alert('성공적으로 등록되었습니다.');
+                    window.location.reload();
+                });
+            });
+        },
+        error:function(request,status,error){
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+        }
+    });
 }
 
 function numberWithCommas(x) {

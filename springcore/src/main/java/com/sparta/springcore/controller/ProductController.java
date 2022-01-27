@@ -78,6 +78,16 @@ public class ProductController {
         return products;
     }
 
+    // 폴더 추가
+    @PostMapping("/api/products/{productId}/folder")
+    public Long addFolder(
+            @PathVariable Long productId,
+            @RequestParam Long folderId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails
+    ){
+        Product product = productService.addFolder(productId, folderId, userDetails.getUser());
+        return product.getId();
+    }
 
 
 }

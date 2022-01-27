@@ -1,9 +1,11 @@
 package com.sparta.springcore.testdata;
 
 import com.sparta.springcore.dto.ItemDto;
+import com.sparta.springcore.model.Folder;
 import com.sparta.springcore.model.Product;
 import com.sparta.springcore.model.User;
 import com.sparta.springcore.model.UserRoleEnum;
+import com.sparta.springcore.repository.FolderRepository;
 import com.sparta.springcore.repository.ProductRepository;
 import com.sparta.springcore.repository.UserRepository;
 import com.sparta.springcore.service.ItemSearchService;
@@ -30,6 +32,9 @@ public class TestDataRunner implements ApplicationRunner {
     ProductRepository productRepository;
 
     @Autowired
+    FolderRepository folderRepository;
+
+    @Autowired
     UserRepository userRepository;
 
     @Autowired
@@ -41,22 +46,34 @@ public class TestDataRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         // 테스트 User 생성
-        User testUser = new User("user", passwordEncoder.encode("123"), "sugar@sparta.com", UserRoleEnum.USER);
-        testUser = userRepository.save(testUser);
+//        User testUser = new User("user", passwordEncoder.encode("123"), "sugar@sparta.com", UserRoleEnum.USER);
+//        testUser = userRepository.save(testUser);
+//
+//        // 테스트 User 의 관심상품 등록
+//        // 검색어 당 관심상품 10개 등록
+//        createTestData(testUser, "신발");
+//        createTestData(testUser, "과자");
+//        createTestData(testUser, "키보드");
+//        createTestData(testUser, "휴지");
+//        createTestData(testUser, "휴대폰");
+//        createTestData(testUser, "앨범");
+//        createTestData(testUser, "헤드폰");
+//        createTestData(testUser, "이어폰");
+//        createTestData(testUser, "노트북");
+//        createTestData(testUser, "무선 이어폰");
+//        createTestData(testUser, "모니터");
+//
+//        createTestFolderData(testUser, "IT 기기");
+//        createTestFolderData(testUser, "옷");
 
-        // 테스트 User 의 관심상품 등록
-        // 검색어 당 관심상품 10개 등록
-        createTestData(testUser, "신발");
-        createTestData(testUser, "과자");
-        createTestData(testUser, "키보드");
-        createTestData(testUser, "휴지");
-        createTestData(testUser, "휴대폰");
-        createTestData(testUser, "앨범");
-        createTestData(testUser, "헤드폰");
-        createTestData(testUser, "이어폰");
-        createTestData(testUser, "노트북");
-        createTestData(testUser, "무선 이어폰");
-        createTestData(testUser, "모니터");
+    }
+
+    private void createTestFolderData(User user, String searchWord) throws IOException {
+
+        Folder folder = new Folder();
+        folder.setName(searchWord);
+        folder.setUser(user);
+        folderRepository.save(folder);
     }
 
     private void createTestData(User user, String searchWord) throws IOException {
