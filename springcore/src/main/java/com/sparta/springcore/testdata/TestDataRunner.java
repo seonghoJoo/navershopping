@@ -48,6 +48,17 @@ public class TestDataRunner implements ApplicationRunner {
         // 테스트 User 생성
 //        User testUser = new User("user", passwordEncoder.encode("123"), "sugar@sparta.com", UserRoleEnum.USER);
 //        testUser = userRepository.save(testUser);
+
+        User testUser2 = new User("user2", passwordEncoder.encode("123"), "sugar2@sparta.com", UserRoleEnum.USER);
+        testUser2 = userRepository.save(testUser2);
+
+        User testUser3 = new User("user3", passwordEncoder.encode("123"), "sugar3@sparta.com", UserRoleEnum.USER);
+        testUser3 = userRepository.save(testUser3);
+
+        User testUserAdmin = new User("admin", passwordEncoder.encode("123"), "sugar4@sparta.com", UserRoleEnum.ADMIN);
+        testUserAdmin = userRepository.save(testUserAdmin);
+
+
 //
 //        // 테스트 User 의 관심상품 등록
 //        // 검색어 당 관심상품 10개 등록
