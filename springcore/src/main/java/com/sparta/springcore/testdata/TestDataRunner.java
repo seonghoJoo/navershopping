@@ -46,8 +46,8 @@ public class TestDataRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         // 테스트 User 생성
-//        User testUser = new User("user", passwordEncoder.encode("123"), "sugar@sparta.com", UserRoleEnum.USER);
-//        testUser = userRepository.save(testUser);
+        User testUser = new User("user", passwordEncoder.encode("123"), "sugar@sparta.com", UserRoleEnum.USER);
+        testUser = userRepository.save(testUser);
 
         User testUser2 = new User("user2", passwordEncoder.encode("123"), "sugar2@sparta.com", UserRoleEnum.USER);
         testUser2 = userRepository.save(testUser2);
@@ -59,23 +59,23 @@ public class TestDataRunner implements ApplicationRunner {
         testUserAdmin = userRepository.save(testUserAdmin);
 
 
-//
-//        // 테스트 User 의 관심상품 등록
-//        // 검색어 당 관심상품 10개 등록
-//        createTestData(testUser, "신발");
-//        createTestData(testUser, "과자");
-//        createTestData(testUser, "키보드");
-//        createTestData(testUser, "휴지");
-//        createTestData(testUser, "휴대폰");
-//        createTestData(testUser, "앨범");
-//        createTestData(testUser, "헤드폰");
-//        createTestData(testUser, "이어폰");
-//        createTestData(testUser, "노트북");
-//        createTestData(testUser, "무선 이어폰");
-//        createTestData(testUser, "모니터");
-//
-//        createTestFolderData(testUser, "IT 기기");
-//        createTestFolderData(testUser, "옷");
+
+        // 테스트 User 의 관심상품 등록
+        // 검색어 당 관심상품 10개 등록
+        createTestData(testUser, "신발");
+        createTestData(testUser, "과자");
+        createTestData(testUser, "키보드");
+        createTestData(testUser, "휴지");
+        createTestData(testUser, "휴대폰");
+        createTestData(testUser, "앨범");
+        createTestData(testUser, "헤드폰");
+        createTestData(testUser, "이어폰");
+        createTestData(testUser, "노트북");
+        createTestData(testUser, "무선 이어폰");
+        createTestData(testUser, "모니터");
+
+        createTestFolderData(testUser, "IT 기기");
+        createTestFolderData(testUser, "옷");
 
     }
 

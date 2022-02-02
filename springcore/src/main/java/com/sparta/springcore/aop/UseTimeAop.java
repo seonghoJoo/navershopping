@@ -21,6 +21,8 @@ public class UseTimeAop {
 
     @Around("execution(public * com.sparta.springcore.controller..*(..))")
     public Object execute(ProceedingJoinPoint joinPoint) throws Throwable {
+
+        // advice
         // 측정 시작 시간
         long startTime = System.currentTimeMillis();
 
