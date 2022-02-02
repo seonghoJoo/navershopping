@@ -29,7 +29,7 @@ public class ApiUseTime {
         this.totalTime = totalTime;
     }
 
-    public void addUserTime(Long useTime){
+    public void addUseTime(Long useTime){
         this.totalTime += useTime;
     }
 

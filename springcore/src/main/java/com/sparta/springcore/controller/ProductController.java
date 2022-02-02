@@ -19,13 +19,10 @@ import java.sql.SQLException;
 public class ProductController {
 
     private final ProductService productService;
-    private final ApiUseTimeRepository apiUserTimeRepository;
+    //private final ApiUseTimeRepository apiUserTimeRepository;
 
-    public ProductController(ProductService productService,
-                             ApiUseTimeRepository apiUserTimeRepository
-                             ){
+    public ProductController(ProductService productService){
         this.productService = productService;
-        this.apiUserTimeRepository = apiUserTimeRepository;
     }
 
 
@@ -35,30 +32,33 @@ public class ProductController {
                                  @AuthenticationPrincipal UserDetailsImpl userDetails
                                  ) throws SQLException {
 
-        long startTime = System.currentTimeMillis();
-        try{
-            // 로그인 되어 있는 회원 테이블의 ID
-            Long userId = userDetails.getUser().getId();
+        // 로그인 되어 있는 회원 테이블의 ID
+        Long userId = userDetails.getUser().getId();
 
-            Product product = productService.createProduct(requestDto,userId);
+        Product product = productService.createProduct(requestDto,userId);
 
-            // 응답 보내기
-            return product;
-        }finally {
-            long endTime = System.currentTimeMillis();
-            long runTime = endTime - startTime;
-            System.out.println("소요시간 : " + runTime);
+        // 응답 보내기
+        return product;
 
-            User user = userDetails.getUser();
-            ApiUseTime apiUseTime = apiUserTimeRepository.findByUser(user).orElse(null);
-            if(apiUseTime == null){
-                apiUseTime = new ApiUseTime(user, runTime);
-            }else{
-                apiUseTime.addUserTime(runTime);
-            }
-            System.out.println("[API User Time] username : "+ user.getUsername() + " total Time : " + apiUseTime.getTotalTime());
-            apiUserTimeRepository.save(apiUseTime);
-        }
+//        // 측정 시작 시간
+//        long startTime = System.currentTimeMillis();
+//        try{
+//
+//        }finally {
+//            long endTime = System.currentTimeMillis();
+//            long runTime = endTime - startTime;
+//            System.out.println("소요시간 : " + runTime);
+//
+//            User user = userDetails.getUser();
+//            ApiUseTime apiUseTime = apiUserTimeRepository.findByUser(user).orElse(null);
+//            if(apiUseTime == null){
+//                apiUseTime = new ApiUseTime(user, runTime);
+//            }else{
+//                apiUseTime.addUserTime(runTime);
+//            }
+//            System.out.println("[API User Time] username : "+ user.getUsername() + " total Time : " + apiUseTime.getTotalTime());
+//            apiUserTimeRepository.save(apiUseTime);
+//        }
     }
 
     // 설정 가격 변경
