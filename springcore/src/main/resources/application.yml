@@ -11,7 +11,7 @@ spring:
   jpa:
     hibernate:
       # app 실행시점에 테이블 모두 지우고 다시 생성
-      ddl-auto: create
+      ddl-auto: none
     properties:
       hibernate:
         #show_sql : true
@@ -24,5 +24,6 @@ server:
 #로그
 logging:
   level:
+
     org.hibernate.SQL : debug
     #org.hibernate.type : trace

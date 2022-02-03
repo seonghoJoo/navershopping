@@ -19,6 +19,8 @@ public class UseTimeAop {
         this.apiUseTimeRepository = apiUseTimeRepository;
     }
 
+    // 어드바이스
+    // Around / Before / After / AfterReturning / AfterThrowing
     @Around("execution(public * com.sparta.springcore.controller..*(..))")
     public Object execute(ProceedingJoinPoint joinPoint) throws Throwable {
 

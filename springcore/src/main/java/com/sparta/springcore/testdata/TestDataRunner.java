@@ -74,9 +74,6 @@ public class TestDataRunner implements ApplicationRunner {
         createTestData(testUser, "무선 이어폰");
         createTestData(testUser, "모니터");
 
-        createTestFolderData(testUser, "IT 기기");
-        createTestFolderData(testUser, "옷");
-
     }
 
     private void createTestFolderData(User user, String searchWord) throws IOException {
@@ -112,6 +109,8 @@ public class TestDataRunner implements ApplicationRunner {
         }
 
         productRepository.saveAll(productList);
+
+        createTestFolderData(user, searchWord);
     }
 
     public int getRandomNumber(int min, int max) {
