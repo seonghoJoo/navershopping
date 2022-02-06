@@ -89,6 +89,7 @@ $('#product-container').append(tempHtml);
 }
 });
 }
+
 function openFolder(folderId) {
 $("button.product-folder").removeClass("folder-active");
 if (!folderId) {
@@ -98,10 +99,12 @@ $(`button[value='${folderId}']`).addClass('folder-active');
 }
 showProduct(folderId);
 }
+
 // 폴더 추가 팝업
 function openAddFolderPopup() {
 $('#container2').addClass('active');
 }
+
 // 폴더 Input 추가
 function addFolderInput() {
 $('#folders-input').append(
@@ -114,11 +117,13 @@ $('#folders-input').append(
 `
 );
 }
+
 function closeFolderInput(folder) {
 $(folder).prev().remove();
 $(folder).next().remove();
 $(folder).remove();
 }
+
 function addFolder() {
 const folderNames = $('.folderToAdd').toArray().map(input => input.value);
 folderNames.forEach(name => {
@@ -138,6 +143,14 @@ success: function (response) {
 $('#container2').removeClass('active');
 alert('성공적으로 등록되었습니다.');
 window.location.reload();
+},
+error: function (response) {
+// 서버에서 받은 에러 메시지를 노출
+if (response.responseJSON && response.responseJSON.errorMessage) {
+alert(response.responseJSON.errorMessage);
+} else {
+alert("알 수 없는 에러가 발생했습니다.");
+}
 }
 })
 }
@@ -181,39 +194,36 @@ ${folders}
 }
 
 function addInputForProductToFolder(productId, button) {
-    $.ajax({
-        type: 'GET',
-        url: '/api/folders',
-        success: function (folders) {
-            const options = folders.map(folder => `<option value="${folder.id}">${folder.name}</option>`)
-            const form = `
-                <span>
-                    <form id="folder-select" method="post" autocomplete="off" action="/api/products/${productId}/folder">
-                        <select name="folderId" form="folder-select">
-                            ${options}
-                        </select>
-                        <input type="submit" value="추가" style="padding: 5px; font-size: 12px; margin-left: 5px;">
-                    </form>
-                </span>
-            `;
-            $(form).insertBefore(button);
-            $(button).remove();
-            $("#folder-select").on('submit', function(e) {
-                e.preventDefault();
-                $.ajax({
-                    type: $(this).prop('method'),
-                    url : $(this).prop('action'),
-                    data: $(this).serialize()
-                }).done(function() {
-                    alert('성공적으로 등록되었습니다.');
-                    window.location.reload();
-                });
-            });
-        },
-        error:function(request,status,error){
-                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-        }
-    });
+$.ajax({
+type: 'GET',
+url: `/api/folders`,
+success: function (folders) {
+const options = folders.map(folder => `<option value="${folder.id}">${folder.name}</option>`)
+const form = `
+<span>
+<form id="folder-select" method="post" autocomplete="off" action="/api/products/${productId}/folder">
+<select name="folderId" form="folder-select">
+${options}
+</select>
+<input type="submit" value="추가" style="padding: 5px; font-size: 12px; margin-left: 5px;">
+</form>
+</span>
+`;
+$(form).insertBefore(button);
+$(button).remove();
+$("#folder-select").on('submit', function(e) {
+e.preventDefault();
+$.ajax({
+type: $(this).prop('method'),
+url : $(this).prop('action'),
+data: $(this).serialize()
+}).done(function() {
+alert('성공적으로 등록되었습니다.');
+window.location.reload();
+});
+});
+}
+});
 }
 
 function numberWithCommas(x) {
